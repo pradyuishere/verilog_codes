@@ -18,3 +18,8 @@ $ vvp sim
 It produces fa.vcd, which can be viewed in gtkwave.
 
 -- 
+A wide adder using parameterisation of FA done above.
+$ iverilog -o sim cswap_wide_adder_tb.v cswap_wide_adder.v
+$ vvp sim
+
+
