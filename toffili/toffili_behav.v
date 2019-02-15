@@ -7,10 +7,20 @@ module toffili(aout, bout, cout, a, b, c);
 	output reg bout;
 	output reg cout;
 	
-	wire ab;
+	always@ (a or b or c)
+	begin
+		if(a==1 && b==1)
+		begin
+			aout<= a;
+			bout<= b;
+			cout<= ~c;
+		end
+		else
+		begin
+			aout<= a;
+			bout<= b;
+			cout<= c;
+		end
+	end
 	
-	buf(aout, a);
-	buf(bout, b);
-	and(ab, a, b);
-	xor(cout, ab, c)
 endmodule
