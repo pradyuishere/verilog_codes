@@ -33,3 +33,33 @@ module nbit_input #(parameter N = 8) (
   assign carry = carrys[N];
 
 endmodule
+
+module nm_bit_multiplier #(parameter N = 8, parameter M = 8) (
+  input [N-1:0] x,
+  input [M-1:0] y,
+  input [N-1:0] u,
+  input [M-1:0] d,
+  output [N+M-2:0] sum,
+  output carry
+  );
+
+  wire [N-1:0] sums [M:0];
+  wire carrys[M:0];
+
+  assign {carrys[0], sums[0][N-1:1]} = u;
+
+  genvar i;
+  for(i = 0; i < M; i = i + 1)
+  begin
+    nbit_input i_nbit_input(x, y[i], {carrys[i], sums[i][N-1:1]}, d[i], sums[i+1], carrys[i+1]);
+  end
+
+  for(i = 0; i < M-1; i = i + 1)
+  begin
+    assign sum[i] = sums[i+1][0];
+  end
+
+  assign sum[M+N-2:M-1] = sums[M];
+  assign carry = carrys[M];
+
+endmodule
