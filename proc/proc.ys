@@ -1,0 +1,5 @@
+read_verilog proc.v
+proc
+opt
+splitnets -ports
+show -colors 3 -pause
